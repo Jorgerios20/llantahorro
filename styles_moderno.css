@@ -27,7 +27,13 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+html{
+    scroll-behavior:smooth;scroll-padding-top:90px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+
+}
 
 body{
   margin:0;
@@ -35,6 +41,8 @@ body{
   color:var(--texto);
   background:var(--blanco);
   overflow-x:hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 h1,h2,h3{
