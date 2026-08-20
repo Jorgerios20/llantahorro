@@ -26,23 +26,27 @@
   --radius:24px;
 }
 
-*{box-sizing:border-box}
-html{
-    scroll-behavior:smooth;scroll-padding-top:90px;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
 
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
-body{
-  margin:0;
-  font-family:var(--font-body);
-  color:var(--texto);
-  background:var(--blanco);
-  overflow-x:hidden;
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
   width: 100%;
   max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--texto);
+  background: var(--blanco);
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 h1,h2,h3{
@@ -1002,18 +1006,6 @@ img{max-width:100%}
   from{transform:translateX(0)}
   to{transform:translateX(-50%)}
 }
-
-.marquee-fade-left,.marquee-fade-right{
-  position:absolute;
-  top:0; bottom:0;
-  width:100px;
-  z-index:2;
-  pointer-events:none;
-}
-.marquee-fade-left, .marquee-fade-right{
-  right:0;
-  background:linear-gradient(-90deg,#101c7b,transparent);
-}
 .marquee-tread{
   height:10px;
   background:repeating-linear-gradient(
@@ -1023,6 +1015,18 @@ img{max-width:100%}
   );
     margin-bottom: 0px;
 }
+.marquee-fade-left,.marquee-fade-right{
+  position:absolute;
+  top:0; bottom:0;
+  width:100px;
+  z-index:2;
+  pointer-events:none;
+}
+.marquee-fade-left, .marquee-fade-right{
+  right:0; 
+  background:linear-gradient(-90deg,#101c7b,transparent);
+}
+
 
 .marquee-fade-left{ left: 0; background: linear-gradient(90deg, var(--azul), transparent); }
 .marquee-fade-right{ right: 0; background: linear-gradient(-90deg, var(--azul), transparent); }
@@ -1310,10 +1314,15 @@ a:focus-visible,button:focus-visible{
     width:30px;
   }
 
-  .hero{
-    min-height:auto;
-    padding:135px 0 85px;
-  }
+  .hero {
+  position: relative;
+  min-height: 760px;
+  display: flex;
+  align-items: center;
+  overflow: hidden; 
+  background: linear-gradient(110deg, #080f4c 0%, #1829A3 55%, #263bd1 100%);
+  color: #fff;
+}
 
   .hero-title{
     font-size:clamp(3rem,10vw,5rem);
