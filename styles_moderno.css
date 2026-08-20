@@ -1034,32 +1034,20 @@ img{max-width:100%}
   background-position:center;
 }
 
-.nosotros-video-wrap{
-  position:relative;
-  border-radius:28px;
-  overflow:hidden;
-  border:8px solid rgba(255,255,255,.9);
-  aspect-ratio:16/10;
-  background:var(--azul);
-  box-shadow:var(--shadow-lg);
+.fb-reel-container {
+  width: 100%;
+  max-width: 320px; /* Ancho máximo deseado */
+  aspect-ratio: 9 / 16; /* Fuerza la proporción vertical estándar de Reels */
+  margin: 0 auto;
 }
 
-.nosotros-video-wrap::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  border:1px solid rgba(255,255,255,.25);
-  border-radius:20px;
+.fb-reel-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: hidden;
 }
 
-.nosotros-video-wrap iframe,
-.nosotros-video-wrap video{
-  width:100%;
-  height:100%;
-  border:0;
-  display:block;
-}
 
 .dato-card{
   position:relative;
