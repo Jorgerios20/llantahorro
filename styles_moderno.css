@@ -1225,8 +1225,8 @@ img{max-width:100%}
   height:10px;
   background:repeating-linear-gradient(
     -45deg,
-    var(--amarillo) 0,var(--amarillo) 14px,
-    var(--rojo) 14px,var(--rojo) 28px
+    var(--azul) 0,var(--azul) 14px,
+    var(--amarillo) 14px,var(--amarillo) 28px
   );
   margin-bottom:38px;
 }
@@ -1415,5 +1415,97 @@ a:focus-visible,button:focus-visible{
 
   .marquee-fade-left,.marquee-fade-right{
     width:45px;
+  }
+}
+
+/* =========================================================
+   MICROINTERACCIONES (AOS + GSAP)
+   ========================================================= */
+
+/* Tarjetas que reciben efecto "tilt" vía GSAP en escritorio */
+.servicio-card,
+.dato-card,
+.contacto-card{
+  will-change:transform;
+  transform-style:preserve-3d;
+}
+
+/* Botones con efecto magnético: preparamos transform-origin */
+.btn-main,
+.btn-secondary,
+.btn-cta{
+  will-change:transform;
+}
+
+/* Brillo diagonal al pasar el mouse sobre los botones principales */
+.btn-main,
+.btn-cta{
+  position:relative;
+  overflow:hidden;
+}
+
+.btn-main::before,
+.btn-cta::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-75%;
+  width:45%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-20deg);
+  transition:left .65s ease;
+  pointer-events:none;
+}
+
+.btn-main:hover::before,
+.btn-cta:hover::before{
+  left:130%;
+}
+
+/* Logos de marcas: además del grayscale, un realce sutil al pasar el mouse */
+.marquee-item{
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+
+.marquee-item:hover{
+  transform:translateY(-6px) scale(1.05);
+  box-shadow:0 16px 30px rgba(0,0,0,.18);
+}
+
+/* Ícono de servicio: pequeño giro al pasar el mouse sobre la tarjeta */
+.servicio-icono{
+  transition:transform .4s ease;
+}
+
+.servicio-card:hover .servicio-icono{
+  transform:rotate(-8deg) scale(1.08);
+}
+
+/* Enlace "Más información": la flecha se desplaza al hover */
+.service-link i{
+  transition:transform .25s ease;
+  display:inline-block;
+}
+
+.service-link:hover i{
+  transform:translateX(5px);
+}
+
+/* Botones sociales del footer: leve rebote en el ícono */
+.social-btn i{
+  transition:transform .25s ease;
+}
+
+.social-btn:hover i{
+  transform:scale(1.15);
+}
+
+/* Evita que el tilt/hover interactivo se aplique en pantallas táctiles */
+@media (hover:none){
+  .servicio-card:hover,
+  .dato-card:hover,
+  .contacto-card:hover{
+    transform:none;
   }
 }
