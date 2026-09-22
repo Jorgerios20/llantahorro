@@ -865,81 +865,111 @@
   <!-- Bootstrap 5 JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    /* ============ AÑO FOOTER ============ */
-    document.getElementById('anioActual').textContent = new Date().getFullYear();
+  /* ============ AÑO FOOTER ============ */
+  document.getElementById('anioActual').textContent = new Date().getFullYear();
 
-    /* ============ NAVBAR SCROLL ============ */
-    const nav = document.getElementById('mainNavbar');
-    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+  /* ============ NAVBAR SCROLL ============ */
+  const nav = document.getElementById('mainNavbar');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-    /* ============ REVEAL AL SCROLL ============ */
-    const revealElements = document.querySelectorAll('[data-reveal]');
-    const revealOnScroll = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-revealed');
-        observer.unobserve(entry.target);
+  /* ============ REVEAL AL SCROLL ============ */
+  const revealElements = document.querySelectorAll('[data-reveal]');
+  const revealOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-revealed');
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -60px 0px'
+  });
+  revealElements.forEach(el => revealOnScroll.observe(el));
+
+  /* ============ SCROLL OPTIMIZADO (un solo rAF) ============ */
+  const progressBar = document.getElementById('scrollProgress');
+  const backToTop   = document.getElementById('backToTop');
+  const parallaxItems = document.querySelectorAll('[data-parallax]');
+
+  let ultimoScroll = 0;
+  let rafPendiente = false;
+  let backToTopVisible = false;
+
+  function enScroll() {
+    const scrollY = window.scrollY;
+
+    // 1. Barra de progreso (solo si cambió >2px)
+    if (Math.abs(scrollY - ultimoScroll) > 2) {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
+      progressBar.style.width = progress + '%';
+      ultimoScroll = scrollY;
+    }
+
+    // 2. Botón volver arriba (solo si cambió el estado)
+    const deberiaVerse = scrollY > 400;
+    if (deberiaVerse !== backToTopVisible) {
+      backToTop.classList.toggle('visible', deberiaVerse);
+      backToTopVisible = deberiaVerse;
+    }
+
+    // 3. Parallax SOLO si hay elementos con data-parallax visibles
+    if (scrollY < window.innerHeight && parallaxItems.length) {
+      parallaxItems.forEach(item => {
+        const speed = parseFloat(item.dataset.parallax) || 0.1;
+        item.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
       });
-    }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -60px 0px'
+    }
+
+    rafPendiente = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!rafPendiente) {
+      requestAnimationFrame(enScroll);
+      rafPendiente = true;
+    }
+  }, { passive: true });
+
+  // Estado inicial
+  enScroll();
+
+  /* ============ CLICK DEL BOTÓN VOLVER ARRIBA ============ */
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ============ MENÚ MÓVIL ============ */
+  document.querySelectorAll('#navMenu .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const menu = document.getElementById('navMenu');
+      if (menu.classList.contains('show')) {
+        bootstrap.Collapse.getOrCreateInstance(menu).hide();
+      }
     });
-    revealElements.forEach(el => revealOnScroll.observe(el));
+  });
 
-    /* =========================================
-   SCROLL OPTIMIZADO (un solo rAF)
-   ========================================= */
-
-const progressBar = document.getElementById('scrollProgress');
-const backToTop   = document.getElementById('backToTop');
-const parallaxItems = document.querySelectorAll('[data-parallax]');
-const heroTire = document.querySelector('.hero-tire');
-
-let ultimoScroll = 0;
-let rafPendiente = false;
-let backToTopVisible = false;
-
-function enScroll() {
-  const scrollY = window.scrollY;
-
-  // 1. Barra de progreso (solo si cambió >2px)
-  if (Math.abs(scrollY - ultimoScroll) > 2) {
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (scrollY / docHeight) * 100 : 0;
-    progressBar.style.width = progress + '%';
-    ultimoScroll = scrollY;
-  }
-
-  // 2. Botón volver arriba (solo si cambió el estado)
-  const deberiaVerse = scrollY > 400;
-  if (deberiaVerse !== backToTopVisible) {
-    backToTop.classList.toggle('visible', deberiaVerse);
-    backToTopVisible = deberiaVerse;
-  }
-
-  // 3. Parallax SOLO del hero, y solo mientras esté visible
-  if (scrollY < window.innerHeight) {
-    parallaxItems.forEach(item => {
-      const speed = parseFloat(item.dataset.parallax) || 0.1;
-      item.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
+  /* ============ SECCIÓN ACTIVA EN MENÚ ============ */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('#navMenu .nav-link');
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      navLinks.forEach(link => {
+        link.classList.toggle(
+          'active',
+          link.getAttribute('href') === '#' + entry.target.id
+        );
+      });
     });
-  }
-
-  rafPendiente = false;
-}
-
-window.addEventListener('scroll', () => {
-  if (!rafPendiente) {
-    requestAnimationFrame(enScroll);
-    rafPendiente = true;
-  }
-}, { passive: true });
-
-// Estado inicial
-enScroll();
-  </script>
+  }, {
+    rootMargin: '-35% 0px -55% 0px',
+    threshold: 0
+  });
+  sections.forEach(section => sectionObserver.observe(section));
+</script>
 </body>
 
 </html>
