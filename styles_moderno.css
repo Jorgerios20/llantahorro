@@ -1,4 +1,4 @@
-
+  
 /* =========================================================
    LLANTAHORRO — DISEÑO MODERNO / PREMIUM
    Mantiene la identidad: azul #1829A3, amarillo #E3D942, rojo #E5301F
@@ -167,9 +167,19 @@ img{max-width:100%}
     background:#E3D942;
 }
 #navLogo{
-  height:45px;
+  height:68px;
   width:auto;
-  border-radius:10px;
+  border-radius:12px;
+  filter:drop-shadow(0 4px 12px rgba(24,41,163,.25));
+  transition:height .3s ease, filter .3s ease;
+}
+
+#navLogo:hover{
+  filter:drop-shadow(0 6px 18px rgba(24,41,163,.4));
+}
+
+#mainNavbar.scrolled #navLogo{
+  height:52px;
 }
 #mainNavbar .navbar-brand{
     color:#fff;
@@ -931,12 +941,33 @@ img{max-width:100%}
 }
 
 .divisor-tread{
-  height:10px;
+  height:12px;
   background:repeating-linear-gradient(
     -45deg,
     var(--azul) 0,var(--azul) 12px,
     var(--amarillo) 12px,var(--amarillo) 24px
   );
+  background-size:200% 100%;
+  animation:treadMove 8s linear infinite;
+  position:relative;
+  overflow:hidden;
+}
+
+.divisor-tread::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  animation:shineTread 3s linear infinite;
+}
+
+@keyframes treadMove{
+  to{ background-position:-200% 0; }
+}
+
+@keyframes shineTread{
+  from{ transform:translateX(-100%); }
+  to{ transform:translateX(100%); }
 }
 
 /* =========================
@@ -987,18 +1018,18 @@ img{max-width:100%}
   transform:translateY(-4px);
 }
 
-.marquee-item img{
-  max-width:100%;
-  max-height:100%;
-  width: auto;
-  height: auto;
-  filter: grayscale(1) opacity(.8);
-  transition: filter .25s ease;
 
-  object-fit:contain;
+.marquee-item img{
+  width: 140px;          /* ← ancho fijo */
+  height: 60px;          /* ← alto fijo */
+  object-fit: contain;   /* ← respeta proporción sin deformar */
+  filter: saturate(1.15) brightness(1.02);
+  transition: filter .3s ease, transform .3s ease;
 }
+
 .marquee-item:hover img{
-  filter: grayscale(0) opacity(1);
+  filter: saturate(1.35) brightness(1.05);
+  transform: scale(1.06);
 }
 
 
@@ -1225,8 +1256,8 @@ img{max-width:100%}
   height:10px;
   background:repeating-linear-gradient(
     -45deg,
-    var(--azul) 0,var(--azul) 14px,
-    var(--amarillo) 14px,var(--amarillo) 28px
+    var(--amarillo) 0,var(--amarillo) 14px,
+    var(--rojo) 14px,var(--rojo) 28px
   );
   margin-bottom:38px;
 }
@@ -1417,95 +1448,381 @@ a:focus-visible,button:focus-visible{
     width:45px;
   }
 }
+/* =========================
+   SUCURSALES
+   ========================= */
 
-/* =========================================================
-   MICROINTERACCIONES (AOS + GSAP)
-   ========================================================= */
-
-/* Tarjetas que reciben efecto "tilt" vía GSAP en escritorio */
-.servicio-card,
-.dato-card,
-.contacto-card{
-  will-change:transform;
-  transform-style:preserve-3d;
-}
-
-/* Botones con efecto magnético: preparamos transform-origin */
-.btn-main,
-.btn-secondary,
-.btn-cta{
-  will-change:transform;
-}
-
-/* Brillo diagonal al pasar el mouse sobre los botones principales */
-.btn-main,
-.btn-cta{
+.section-sucursales{
   position:relative;
+  padding:105px 0 115px;
+  background:
+    radial-gradient(circle at 10% 15%, rgba(227,217,66,.10), transparent 45%),
+    radial-gradient(circle at 90% 85%, rgba(229,48,31,.08), transparent 45%),
+    linear-gradient(180deg,#0a1147 0%,var(--azul) 100%);
+  color:var(--blanco);
   overflow:hidden;
 }
 
-.btn-main::before,
-.btn-cta::before{
+/* Trama sutil de fondo tipo banda de rodamiento */
+.section-sucursales::before{
   content:"";
   position:absolute;
-  top:0;
-  left:-75%;
-  width:45%;
-  height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,.55),transparent);
-  transform:skewX(-20deg);
-  transition:left .65s ease;
+  inset:0;
+  background-image:repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,.025) 0 2px,
+    transparent 2px 42px
+  );
   pointer-events:none;
 }
 
-.btn-main:hover::before,
-.btn-cta:hover::before{
-  left:130%;
+/* Encabezado en versión clara */
+.section-title-light{
+  color:var(--blanco);
 }
 
-/* Logos de marcas: además del grayscale, un realce sutil al pasar el mouse */
-.marquee-item{
-  transition:transform .25s ease,box-shadow .25s ease;
+.section-description-light{
+  color:rgba(255,255,255,.75);
 }
 
-.marquee-item:hover{
-  transform:translateY(-6px) scale(1.05);
-  box-shadow:0 16px 30px rgba(0,0,0,.18);
+.section-sucursales .eyebrow{
+  color:var(--amarillo);
 }
 
-/* Ícono de servicio: pequeño giro al pasar el mouse sobre la tarjeta */
-.servicio-icono{
-  transition:transform .4s ease;
+.section-sucursales .eyebrow::before{
+  background:var(--rojo);
 }
 
-.servicio-card:hover .servicio-icono{
-  transform:rotate(-8deg) scale(1.08);
+/* Grid de tarjetas */
+.sucursales-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:30px;
+  max-width:1260px;
+  margin:0 auto;
+  position:relative;
+  z-index:2;
 }
 
-/* Enlace "Más información": la flecha se desplaza al hover */
-.service-link i{
-  transition:transform .25s ease;
-  display:inline-block;
+/* Tarjeta base */
+.sucursal-card{
+  position:relative;
+  background:linear-gradient(145deg,rgba(255,255,255,.98),rgba(245,247,251,.98));
+  color:var(--texto);
+  border-radius:26px;
+  padding:36px 30px 30px;
+  overflow:hidden;
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.25),
+    0 0 0 1px rgba(255,255,255,.08);
+  transition:transform .5s cubic-bezier(.2,.9,.3,1.25),
+             box-shadow .5s ease;
+  transform-style:preserve-3d;
+  will-change:transform;
 }
 
-.service-link:hover i{
-  transform:translateX(5px);
+.sucursal-card:hover{
+  box-shadow:
+    0 30px 70px rgba(0,0,0,.35),
+    0 0 40px rgba(227,217,66,.35),
+    0 0 0 2px var(--amarillo);
 }
 
-/* Botones sociales del footer: leve rebote en el ícono */
-.social-btn i{
-  transition:transform .25s ease;
+/* Número gigante de fondo */
+.sucursal-num{
+  position:absolute;
+  top:-30px;
+  right:-10px;
+  font-family:var(--font-display);
+  font-size:9rem;
+  line-height:1;
+  color:rgba(24,41,163,.08);
+  transition:all .6s ease;
+  pointer-events:none;
+  user-select:none;
 }
 
-.social-btn:hover i{
-  transform:scale(1.15);
+.sucursal-card:hover .sucursal-num{
+  color:rgba(229,48,31,.16);
+  transform:scale(1.15) rotate(8deg);
 }
 
-/* Evita que el tilt/hover interactivo se aplique en pantallas táctiles */
-@media (hover:none){
-  .servicio-card:hover,
-  .dato-card:hover,
-  .contacto-card:hover{
-    transform:none;
+/* Mini llanta girando en la esquina inferior izquierda */
+.sucursal-tire{
+  position:absolute;
+  bottom:-30px;
+  left:-30px;
+  width:110px;
+  height:110px;
+  border:8px dashed rgba(227,217,66,.20);
+  border-radius:50%;
+  transition:all .7s ease;
+  pointer-events:none;
+}
+
+.sucursal-card:hover .sucursal-tire{
+  border-color:rgba(24,41,163,.35);
+  transform:rotate(360deg) scale(1.1);
+}
+
+/* Icono principal */
+.sucursal-icon{
+  width:64px;
+  height:64px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--azul),var(--azul-3));
+  color:var(--amarillo);
+  font-size:1.55rem;
+  margin-bottom:22px;
+  box-shadow:0 12px 25px rgba(24,41,163,.35);
+  position:relative;
+  z-index:2;
+  transition:transform .4s ease, background .4s ease, color .4s ease;
+}
+
+.sucursal-card:hover .sucursal-icon{
+  transform:rotate(-6deg) scale(1.06);
+  background:linear-gradient(135deg,var(--rojo),#b92015);
+  color:var(--blanco);
+}
+
+/* Título sucursal */
+.sucursal-card h3{
+  font-family:var(--font-display);
+  font-size:1.3rem;
+  color:var(--azul);
+  letter-spacing:.5px;
+  margin:0 0 16px;
+  position:relative;
+  z-index:2;
+  line-height:1.15;
+}
+
+/* Dirección */
+.sucursal-addr{
+  display:flex;
+  gap:10px;
+  color:var(--muted);
+  font-size:.9rem;
+  line-height:1.6;
+  margin-bottom:18px;
+  position:relative;
+  z-index:2;
+}
+
+.sucursal-addr i{
+  color:var(--rojo);
+  margin-top:4px;
+  flex:0 0 auto;
+}
+
+/* Botón teléfono */
+.sucursal-phone{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  background:rgba(24,41,163,.08);
+  border:1.5px solid rgba(24,41,163,.25);
+  color:var(--azul);
+  padding:11px 20px;
+  border-radius:50px;
+  font-weight:700;
+  font-size:.9rem;
+  text-decoration:none;
+  transition:all .3s ease;
+  position:relative;
+  z-index:2;
+  font-family:var(--font-body);
+}
+
+.sucursal-phone i{
+  color:var(--rojo);
+  transition:color .3s ease;
+}
+
+.sucursal-phone:hover{
+  background:var(--rojo);
+  color:var(--blanco);
+  border-color:var(--rojo);
+  transform:translateY(-3px) scale(1.03);
+  box-shadow:0 12px 25px rgba(229,48,31,.45);
+}
+
+.sucursal-phone:hover i{
+  color:var(--amarillo);
+}
+
+/* Huella de llanta lateral al hover */
+.sucursal-card::after{
+  content:"";
+  position:absolute;
+  right:-40px;
+  top:50%;
+  width:90px;
+  height:220px;
+  background-image:repeating-linear-gradient(
+    0deg,
+    rgba(24,41,163,.05) 0 8px,
+    transparent 8px 18px
+  );
+  transform:translateY(-50%) rotate(15deg);
+  opacity:0;
+  transition:opacity .5s ease;
+  pointer-events:none;
+}
+
+.sucursal-card:hover::after{
+  opacity:1;
+}
+
+/* Responsive */
+@media (max-width:767.98px){
+  .section-sucursales{
+    padding:80px 0 90px;
+  }
+  .sucursal-num{
+    font-size:6rem;
+  }
+  .sucursal-card{
+    padding:30px 22px 26px;
+  }
+  .sucursal-card h3{
+    font-size:1.15rem;
+  }
+}
+/* =========================================
+   ANIMACIONES AL HACER SCROLL
+   ========================================= */
+
+/* Estado inicial: los elementos animables están ocultos/desplazados */
+[data-reveal]{
+  opacity:0;
+  transform:translateY(40px);
+  transition:
+    opacity .8s cubic-bezier(.2,.9,.3,1),
+    transform .8s cubic-bezier(.2,.9,.3,1);
+  will-change:opacity, transform;
+}
+
+[data-reveal="up"]{
+  transform:translateY(50px);
+}
+
+[data-reveal="left"]{
+  transform:translateX(-60px);
+}
+
+[data-reveal="right"]{
+  transform:translateX(60px);
+}
+
+[data-reveal="zoom"]{
+  transform:scale(.92);
+}
+
+/* Estado activo: entra a su posición natural */
+[data-reveal].is-revealed{
+  opacity:1;
+  transform:translate(0,0) scale(1);
+}
+
+/* Delays para efecto cascada */
+[data-delay="100"]{ transition-delay:.10s; }
+[data-delay="200"]{ transition-delay:.20s; }
+[data-delay="300"]{ transition-delay:.30s; }
+[data-delay="400"]{ transition-delay:.40s; }
+[data-delay="500"]{ transition-delay:.50s; }
+[data-delay="600"]{ transition-delay:.60s; }
+
+/* =========================================
+   BARRA DE PROGRESO DE SCROLL
+   ========================================= */
+
+.scroll-progress{
+  position:fixed;
+  top:0;
+  left:0;
+  height:3px;
+  width:0%;
+  background:linear-gradient(90deg,var(--azul),var(--amarillo),var(--rojo));
+  z-index:10000;
+  transition:width .08s linear;
+  box-shadow:0 0 10px rgba(227,217,66,.6);
+  pointer-events:none;
+}
+
+/* =========================================
+   BOTÓN VOLVER ARRIBA
+   ========================================= */
+
+.back-to-top{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  border:none;
+  background:linear-gradient(135deg,var(--azul),var(--azul-3));
+  color:var(--amarillo);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.25rem;
+  cursor:pointer;
+  box-shadow:
+    0 15px 35px rgba(24,41,163,.4),
+    0 0 0 2px rgba(255,255,255,.1);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(20px);
+  transition:
+    opacity .3s ease,
+    transform .3s ease,
+    visibility .3s ease,
+    background .3s ease;
+  z-index:9998;
+}
+
+.back-to-top.visible{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0);
+}
+
+.back-to-top:hover{
+  background:linear-gradient(135deg,var(--rojo),#b92015);
+  color:var(--blanco);
+  transform:translateY(-4px) scale(1.05);
+  box-shadow:
+    0 20px 40px rgba(229,48,31,.5),
+    0 0 0 2px rgba(255,255,255,.15);
+}
+
+.back-to-top:active{
+  transform:translateY(-1px) scale(.98);
+}
+
+/* Accesibilidad: si el usuario prefiere menos movimiento, no animar */
+@media (prefers-reduced-motion:reduce){
+  [data-reveal]{
+    opacity:1 !important;
+    transform:none !important;
+    transition:none !important;
+  }
+  .scroll-progress{ display:none; }
+}
+
+/* Responsive: botón más chico en móvil */
+@media (max-width:575.98px){
+  .back-to-top{
+    width:46px;
+    height:46px;
+    right:16px;
+    bottom:16px;
+    font-size:1.1rem;
   }
 }
