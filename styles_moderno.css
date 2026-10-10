@@ -44,6 +44,7 @@
 *,*::before,*::after{box-sizing:border-box}
 
 html{
+  font-size:112.5%; /* 18px base: letras más grandes para mejor lectura */
   scroll-behavior:smooth;
   scroll-padding-top:88px;
   overflow-x:hidden;
@@ -52,7 +53,7 @@ html{
 body{
   margin:0;
   font-family:var(--font-body);
-  font-size:16px;
+  font-size:1rem;
   line-height:1.6;
   color:var(--texto);
   background:var(--blanco);
@@ -63,7 +64,7 @@ body{
 h1,h2,h3{
   font-family:var(--font-display);
   font-stretch:112%;
-  font-weight:800;
+  font-weight:900;
   letter-spacing:-.01em;
 }
 
@@ -82,8 +83,8 @@ img{max-width:100%}
   gap:12px;
   font-family:var(--font-display);
   font-stretch:125%;
-  font-weight:700;
-  font-size:.72rem;
+  font-weight:800;
+  font-size:.82rem;
   letter-spacing:.22em;
   text-transform:uppercase;
   color:var(--azul);
@@ -128,7 +129,7 @@ img{max-width:100%}
   padding:.8rem 1.6rem;
   border-radius:999px;
   font-family:var(--font-body);
-  font-weight:700;
+  font-weight:800;
   font-size:.95rem;
   letter-spacing:.01em;
   cursor:pointer;
@@ -231,7 +232,7 @@ img{max-width:100%}
   position:relative;
   color:rgba(255,255,255,.78);
   font-size:.9rem;
-  font-weight:600;
+  font-weight:800;
   padding:.6rem .85rem!important;
   transition:color var(--dur) var(--ease);
 }
@@ -336,8 +337,8 @@ img{max-width:100%}
   color:var(--amarillo);
   font-family:var(--font-display);
   font-stretch:125%;
-  font-size:.68rem;
-  font-weight:700;
+  font-size:.82rem;
+  font-weight:800;
   letter-spacing:.2em;
 }
 
@@ -368,7 +369,7 @@ img{max-width:100%}
 
 .hero-subtitle{
   font-size:1.25rem;
-  font-weight:600;
+  font-weight:800;
   color:var(--blanco);
   margin-bottom:12px;
 }
@@ -412,7 +413,7 @@ img{max-width:100%}
 .hero-stat strong{
   font-family:var(--font-display);
   font-stretch:125%;
-  font-weight:800;
+  font-weight:900;
   font-size:1.6rem;
   line-height:1;
   color:var(--blanco);
@@ -420,8 +421,8 @@ img{max-width:100%}
 
 .hero-stat span{
   color:rgba(255,255,255,.6);
-  font-size:.74rem;
-  font-weight:600;
+  font-size:.82rem;
+  font-weight:800;
   text-transform:uppercase;
   letter-spacing:.12em;
 }
@@ -482,7 +483,7 @@ img{max-width:100%}
   padding:11px 16px;
   border-radius:14px;
   font-size:.8rem;
-  font-weight:700;
+  font-weight:800;
 }
 
 .hero-label i{color:var(--amarillo);font-size:1.1rem}
@@ -512,7 +513,7 @@ img{max-width:100%}
 .hero-floating-card span{
   display:block;
   color:rgba(255,255,255,.62);
-  font-size:.74rem;
+  font-size:.82rem;
   margin-top:2px;
 }
 
@@ -542,8 +543,8 @@ img{max-width:100%}
   align-items:center;
   gap:10px;
   color:rgba(255,255,255,.8);
-  font-size:.78rem;
-  font-weight:600;
+  font-size:.82rem;
+  font-weight:800;
   letter-spacing:.06em;
   text-transform:uppercase;
 }
@@ -637,7 +638,7 @@ img{max-width:100%}
   align-items:center;
   gap:8px;
   min-height:44px;
-  font-weight:700;
+  font-weight:800;
   font-size:.9rem;
   color:var(--azul);
 }
@@ -857,7 +858,7 @@ img{max-width:100%}
   min-height:44px;
   padding:10px 20px;
   border-radius:999px;
-  font-weight:700;
+  font-weight:800;
   font-size:.92rem;
   color:var(--blanco);
   background:rgba(255,255,255,.06);
@@ -952,7 +953,7 @@ img{max-width:100%}
 
 .dato-texto{
   font-size:.88rem;
-  font-weight:600;
+  font-weight:800;
   color:rgba(255,255,255,.85);
 }
 
@@ -1005,7 +1006,7 @@ img{max-width:100%}
 }
 
 .contacto-item h3{
-  font-size:.78rem;
+  font-size:.82rem;
   font-stretch:125%;
   letter-spacing:.18em;
   text-transform:uppercase;
@@ -1021,7 +1022,7 @@ img{max-width:100%}
   line-height:1.6;
 }
 
-.contacto-item a{font-weight:700}
+.contacto-item a{font-weight:800}
 .contacto-item a:hover{color:var(--amarillo)}
 
 .contacto-card .btn-cta{margin-top:auto}
@@ -1069,7 +1070,7 @@ img{max-width:100%}
 .footer-slogan{
   color:var(--amarillo);
   font-size:.9rem;
-  font-weight:600;
+  font-weight:800;
   margin-top:.6rem;
 }
 
@@ -1292,7 +1293,7 @@ button:focus-visible{
   .hero-stat{padding-right:14px}
   .hero-stat + .hero-stat{padding-left:14px}
   .hero-stat strong{font-size:1.25rem}
-  .hero-stat span{font-size:.68rem;letter-spacing:.08em}
+  .hero-stat span{font-size:.82rem;letter-spacing:.08em}
 
   .hero-product{min-height:360px}
 
@@ -1300,7 +1301,7 @@ button:focus-visible{
 
   .hero-tire{max-width:260px}
 
-  .hero-label{top:6px;right:0;font-size:.74rem}
+  .hero-label{top:6px;right:0;font-size:.82rem}
 
   .hero-floating-card{left:0;bottom:4px;padding:11px 13px}
 
@@ -1314,3 +1315,12 @@ button:focus-visible{
 
   .back-to-top{width:44px;height:44px;right:16px;bottom:16px}
 }
+
+/* =========================================================
+   LEGIBILIDAD: toda la tipografía en negritas (mín. 800)
+   para que se lea bien a cualquier edad.
+   ========================================================= */
+body{font-weight:800}
+small,.small,.form-control,.form-select,.form-label,.dropdown-item{font-weight:800}
+.btn{--bs-btn-font-weight:800}
+.contacto-nota{display:block;font-size:.85em;opacity:.8}
