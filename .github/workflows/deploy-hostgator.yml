@@ -1,0 +1,44 @@
+# Sube el sitio a HostGator por FTPS cada vez que se hace push a main.
+# Configuración en GitHub → Settings → Secrets and variables → Actions:
+#   Secrets:   FTP_SERVER, FTP_USERNAME, FTP_PASSWORD
+#   Variable (opcional): FTP_SERVER_DIR  (por defecto /public_html/)
+name: Desplegar en HostGator
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-hostgator
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+    steps:
+      - name: Avisar si faltan los datos FTP
+        if: env.FTP_SERVER == ''
+        run: echo "::warning::Faltan los secrets FTP_SERVER / FTP_USERNAME / FTP_PASSWORD; no se desplegó."
+
+      - name: Descargar el código
+        if: env.FTP_SERVER != ''
+        uses: actions/checkout@v4
+
+      - name: Subir a HostGator
+        if: env.FTP_SERVER != ''
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            **/*.backup.*
+            README.md

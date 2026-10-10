@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://llantaahorroqro.com.mx/sitemap.xml
