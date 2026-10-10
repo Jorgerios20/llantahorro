@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://llantaahorroqro.com.mx/sitemap.xml
+Sitemap: https://llantahorroqro.com.mx/sitemap.xml
