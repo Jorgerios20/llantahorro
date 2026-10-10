@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,600;1,700&display=swap"
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,100..125,600..900;1,100..125,600..900&family=Manrope:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles_moderno.css">
 </head>
@@ -20,12 +20,11 @@
 
   <!-- =============== BARRA DE PROGRESO =============== -->
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-<hr>
   <!-- =============== NAVBAR =============== -->
   <nav class="navbar navbar-expand-lg fixed-top" id="mainNavbar">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio">
-        <img src="images/logo.png" alt="Logotipo de la llantera" id="navLogo" onerror="this.style.display='none'">
+        <img src="images/logo-footer.png" alt="Llantahorro — Seguridad al mejor precio" id="navLogo" width="1344" height="800" onerror="this.style.display='none'">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"
         aria-controls="navMenu" aria-expanded="false" aria-label="Abrir menú">
@@ -40,7 +39,7 @@
           <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
           <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
           <li class="nav-item">
-            <a class="btn btn-cta ms-lg-2" href="tel:+525512345678"><i class="bi bi-telephone-fill"></i> Llámanos</a>
+            <a class="btn btn-cta ms-lg-2" href="tel:+524422441125"><i class="bi bi-telephone-fill"></i> Llámanos</a>
           </li>
         </ul>
       </div>
@@ -116,7 +115,7 @@
               Calidad garantizada
             </div>
 
-            <img src="images/hero-imagen.jpeg" alt="Llanta Llantahorro" class="hero-tire">
+            <img src="images/hero-imagen.jpeg" alt="Promoción Llantahorro: tu auto pide seguridad, empieza por tus llantas" class="hero-tire" width="1224" height="1440" fetchpriority="high">
 
             <div class="hero-floating-card">
               <div class="floating-icon">
@@ -732,7 +731,7 @@
                   Llámanos
                 </h3>
 
-                <a href="tel:+52+524422441125">
+                <a href="tel:+524422441125">
                   +52 442 244 1125
                 </a>
 
@@ -830,7 +829,7 @@
         <div class="col-md-4">
           <div class="d-flex align-items-center gap-2">
             <img src="images/logo-footer.png" alt="Logotipo" class="footer-logo" onerror="this.style.display='none'">
-            <span class="brand-word footer-brand">LLantahorro</span>
+            <span class="brand-word footer-brand">Llantahorro</span>
           </div>
           <p class="footer-slogan">Presión, equilibrio y agarre en cada kilómetro</p>
         </div>
@@ -867,6 +866,19 @@
   <script>
   /* ============ AÑO FOOTER ============ */
   document.getElementById('anioActual').textContent = new Date().getFullYear();
+
+  /* ============ LOGOS DE MARCAS: MISMO PESO VISUAL ============ */
+  // Un logo ancho y uno cuadrado se ven iguales si ocupan la misma área,
+  // no el mismo ancho ni el mismo alto.
+  const AREA_LOGO = 6400;
+  document.querySelectorAll('.marquee-item img').forEach(img => {
+    const ajustar = () => {
+      if (!img.naturalWidth) return;
+      const ratio = img.naturalWidth / img.naturalHeight;
+      img.style.width = Math.round(Math.sqrt(AREA_LOGO * ratio)) + 'px';
+    };
+    img.complete ? ajustar() : img.addEventListener('load', ajustar);
+  });
 
   /* ============ NAVBAR SCROLL ============ */
   const nav = document.getElementById('mainNavbar');
