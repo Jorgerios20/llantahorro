@@ -835,6 +835,86 @@ img{max-width:100%}
 .section-nosotros p a{color:var(--azul);text-decoration:underline;text-underline-offset:3px}
 .section-nosotros p a:hover{color:var(--azul-600)}
 
+.cuando-lista a{color:var(--azul);text-decoration:underline;text-underline-offset:3px}
+
+/* Marcas por gama */
+.gama-card h3{font-size:1.35rem}
+
+.gama-logos{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:auto;
+}
+
+.gama-logo{
+  flex:1 1 calc(50% - 5px);
+  min-height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:.7rem .9rem;
+  background:var(--blanco);
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.gama-logo img{
+  max-width:100%;
+  max-height:54px;
+  object-fit:contain;
+}
+
+/* Cómo leer la medida */
+.medida-ejemplo{
+  max-width:960px;
+  margin:0 auto;
+}
+
+.medida-codigo{
+  margin:0 0 2rem;
+  text-align:center;
+  font-family:var(--font-display);
+  font-stretch:125%;
+  font-style:italic;
+  font-weight:900;
+  font-size:clamp(2.4rem,7vw,4.6rem);
+  line-height:1;
+  color:rgba(255,255,255,.55);
+}
+
+.medida-codigo span{color:var(--amarillo)}
+
+.medida-partes{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:12px;
+  margin:0;
+}
+
+.medida-partes > div{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:1rem 1.2rem;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line-dark);
+  border-radius:var(--radius);
+}
+
+.medida-partes dt{
+  min-width:3ch;
+  font-family:var(--font-display);
+  font-size:1.25rem;
+  font-weight:900;
+  color:var(--amarillo);
+}
+
+.medida-partes dd{
+  margin:0;
+  color:rgba(255,255,255,.8);
+}
+
 .footer-copy a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .footer-copy a:hover{color:var(--amarillo)}
 
