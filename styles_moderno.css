@@ -343,7 +343,9 @@ img{max-width:100%}
   font-stretch:125%;
   font-size:.82rem;
   font-weight:800;
+  line-height:1.6;
   letter-spacing:.2em;
+  text-transform:uppercase;
 }
 
 .hero-badge span{
@@ -355,6 +357,7 @@ img{max-width:100%}
 }
 
 .hero-title{
+  font-family:var(--font-display);
   font-size:clamp(3rem,7vw,6.4rem);
   font-stretch:125%;
   font-weight:900;
@@ -648,6 +651,149 @@ img{max-width:100%}
 }
 
 .service-link:hover{color:var(--azul-600)}
+
+/* =========================
+   PREGUNTAS FRECUENTES
+   ========================= */
+
+.section-faq{
+  padding:110px 0;
+  background:var(--surface);
+}
+
+.faq-lista{
+  max-width:820px;
+  margin:0 auto;
+  --bs-accordion-bg:var(--blanco);
+  --bs-accordion-color:var(--texto);
+  --bs-accordion-border-color:var(--line);
+  --bs-accordion-border-radius:var(--radius);
+  --bs-accordion-inner-border-radius:var(--radius);
+  --bs-accordion-active-bg:var(--blanco);
+  --bs-accordion-active-color:var(--azul);
+  --bs-accordion-btn-focus-box-shadow:0 0 0 3px rgba(2,8,224,.25);
+  --bs-accordion-btn-padding-y:1.2rem;
+  --bs-accordion-btn-padding-x:1.5rem;
+  --bs-accordion-body-padding-x:1.5rem;
+}
+
+.faq-lista .accordion-item{
+  margin-bottom:12px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  overflow:hidden;
+}
+
+.faq-lista .accordion-header{
+  margin:0;
+  font-size:inherit;
+}
+
+.faq-lista .accordion-button{
+  font-family:var(--font-body);
+  font-size:1rem;
+  font-weight:800;
+  color:var(--ink);
+}
+
+.faq-lista .accordion-button:not(.collapsed){
+  color:var(--azul);
+  box-shadow:none;
+}
+
+.faq-lista .accordion-body{
+  padding-top:0;
+  color:var(--muted);
+  line-height:1.7;
+}
+
+/* =========================
+   PÁGINAS DE SERVICIO
+   ========================= */
+
+.hero-page{
+  min-height:auto;
+  padding:180px 0 110px;
+}
+
+.hero-title-page{
+  font-size:clamp(2.6rem,5.4vw,4.8rem);
+}
+
+.migas{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding:0;
+  margin:0 0 24px;
+  list-style:none;
+  font-size:.85rem;
+  font-weight:800;
+  color:rgba(255,255,255,.74);
+}
+
+.migas li + li::before{
+  content:"/";
+  margin-right:8px;
+  color:var(--amarillo);
+}
+
+.migas a{color:var(--blanco)}
+.migas a:hover{color:var(--amarillo)}
+
+.servicio-corrige{
+  margin-top:auto!important;
+  padding-top:1rem;
+  border-top:1px solid var(--line);
+  color:var(--texto)!important;
+}
+
+.cuando-lista{
+  display:grid;
+  gap:14px;
+  padding:0;
+  margin:0;
+  list-style:none;
+}
+
+.cuando-lista li{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  padding:1.1rem 1.3rem;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  line-height:1.6;
+}
+
+.cuando-lista i{
+  margin-top:2px;
+  font-size:1.15rem;
+  color:var(--azul);
+}
+
+.cuando-lista strong{color:var(--ink)}
+
+.cta-band{
+  padding:100px 0;
+  color:var(--blanco);
+  background:var(--ink);
+}
+
+.cta-band .eyebrow{color:var(--amarillo)}
+
+.cta-band-botones{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.cta-band-botones > a{justify-content:center}
+
+.footer-copy a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.footer-copy a:hover{color:var(--amarillo)}
 
 /* =========================
    MARCAS
@@ -1255,6 +1401,7 @@ button:focus-visible{
   .hero-bottom{display:none}
 
   .section-servicios,
+  .section-faq,
   .section-nosotros,
   .section-contacto,
   .section-sucursales{padding-top:84px;padding-bottom:84px}
