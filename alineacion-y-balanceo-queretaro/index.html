@@ -149,9 +149,19 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
           <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link active" href="/alineacion-y-balanceo-queretaro/" aria-current="page">Alineación y balanceo</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle active" href="/#servicios" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Servicios <i class="bi bi-chevron-down nav-chevron" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/#servicios">Todos los servicios</a></li>
+                <li><a class="dropdown-item active" aria-current="page" href="/alineacion-y-balanceo-queretaro/">Alineación y balanceo</a></li>
+                <li><a class="dropdown-item" href="/inflado-con-nitrogeno-queretaro/">Inflado con nitrógeno</a></li>
+            </ul>
+          </li>
           <li class="nav-item"><a class="nav-link" href="/#marcas">Marcas</a></li>
           <li class="nav-item"><a class="nav-link" href="/#sucursales">Sucursales</a></li>
+          <li class="nav-item"><a class="nav-link" href="/#nosotros">Nosotros</a></li>
           <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
           <li class="nav-item">
             <a class="btn btn-cta ms-lg-2" href="tel:+524422441125"><i class="bi bi-telephone-fill"></i> Llámanos</a>
@@ -617,7 +627,7 @@
         <div class="col-md-4 text-md-center">
           <p class="footer-copy mb-0">
             &copy; <span id="anioActual"></span> Llantahorro. Venta de llantas multimarca.<br>
-            <a href="/alineacion-y-balanceo-queretaro/">Alineación y balanceo en Querétaro</a> · Nitrógeno · Rotación.
+            <a href="/alineacion-y-balanceo-queretaro/">Alineación y balanceo en Querétaro</a> · <a href="/inflado-con-nitrogeno-queretaro/">Nitrógeno</a> · Rotación.
           </p>
         </div>
 
@@ -691,7 +701,7 @@
   });
 
   /* ============ MENÚ MÓVIL ============ */
-  document.querySelectorAll('#navMenu .nav-link').forEach(link => {
+  document.querySelectorAll('#navMenu .nav-link:not(.dropdown-toggle), #navMenu .dropdown-item').forEach(link => {
     link.addEventListener('click', () => {
       const menu = document.getElementById('navMenu');
       if (menu.classList.contains('show')) {

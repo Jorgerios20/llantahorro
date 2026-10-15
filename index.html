@@ -212,7 +212,16 @@
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
           <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#servicios">Servicios</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#servicios" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Servicios <i class="bi bi-chevron-down nav-chevron" aria-hidden="true"></i>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#servicios">Todos los servicios</a></li>
+                <li><a class="dropdown-item" href="/alineacion-y-balanceo-queretaro/">Alineación y balanceo</a></li>
+                <li><a class="dropdown-item" href="/inflado-con-nitrogeno-queretaro/">Inflado con nitrógeno</a></li>
+            </ul>
+          </li>
           <li class="nav-item"><a class="nav-link" href="#marcas">Marcas</a></li>
           <li class="nav-item"><a class="nav-link" href="#sucursales">Sucursales</a></li>
           <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
@@ -476,8 +485,8 @@
               más tiempo y ruedan con mejor rendimiento.
             </p>
 
-            <a href="#contacto" class="service-link">
-              Cotizar nitrógeno
+            <a href="/inflado-con-nitrogeno-queretaro/" class="service-link">
+              Ver nitrógeno en Querétaro
               <i class="bi bi-arrow-right"></i>
             </a>
 
@@ -1170,7 +1179,7 @@
         <div class="col-md-4 text-md-center">
           <p class="footer-copy mb-0">
             &copy; <span id="anioActual"></span> Llantahorro. Venta de llantas multimarca.<br>
-            <a href="/alineacion-y-balanceo-queretaro/">Alineación y balanceo en Querétaro</a> · Nitrógeno · Rotación.
+            <a href="/alineacion-y-balanceo-queretaro/">Alineación y balanceo en Querétaro</a> · <a href="/inflado-con-nitrogeno-queretaro/">Nitrógeno</a> · Rotación.
           </p>
         </div>
 
@@ -1287,7 +1296,7 @@
   });
 
   /* ============ MENÚ MÓVIL ============ */
-  document.querySelectorAll('#navMenu .nav-link').forEach(link => {
+  document.querySelectorAll('#navMenu .nav-link:not(.dropdown-toggle), #navMenu .dropdown-item').forEach(link => {
     link.addEventListener('click', () => {
       const menu = document.getElementById('navMenu');
       if (menu.classList.contains('show')) {

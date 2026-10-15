@@ -257,6 +257,46 @@ img{max-width:100%}
 .navbar-nav .nav-link:focus-visible::after,
 .navbar-nav .nav-link.active::after{transform:scaleX(1)}
 
+/* Submenú de servicios */
+.navbar-nav .dropdown-toggle::after{border:0;vertical-align:baseline}
+
+.nav-chevron{
+  display:inline-block;
+  margin-left:2px;
+  font-size:.7rem;
+  transition:transform var(--dur) var(--ease);
+}
+
+.dropdown-toggle.show .nav-chevron{transform:rotate(180deg)}
+
+#mainNavbar .dropdown-menu{
+  min-width:240px;
+  margin-top:.4rem;
+  padding:.5rem;
+  background:var(--ink-2);
+  border:1px solid var(--line-dark);
+  border-radius:14px;
+  box-shadow:var(--shadow-lg);
+}
+
+#mainNavbar .dropdown-item{
+  padding:.65rem .9rem;
+  border-radius:10px;
+  font-size:.9rem;
+  color:rgba(255,255,255,.78);
+}
+
+#mainNavbar .dropdown-item:hover,
+#mainNavbar .dropdown-item:focus-visible{
+  color:var(--blanco);
+  background:rgba(255,255,255,.07);
+}
+
+#mainNavbar .dropdown-item.active{
+  color:var(--amarillo);
+  background:transparent;
+}
+
 #mainNavbar .btn-cta{
   min-height:44px;
   padding:.6rem 1.2rem;
@@ -791,6 +831,9 @@ img{max-width:100%}
 }
 
 .cta-band-botones > a{justify-content:center}
+
+.section-nosotros p a{color:var(--azul);text-decoration:underline;text-underline-offset:3px}
+.section-nosotros p a:hover{color:var(--azul-600)}
 
 .footer-copy a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .footer-copy a:hover{color:var(--amarillo)}
@@ -1383,6 +1426,14 @@ button:focus-visible{
   .navbar-nav .nav-link{padding:.75rem .4rem!important}
 
   .navbar-nav .nav-link::after{left:.4rem;right:auto;width:28px}
+
+  #mainNavbar .dropdown-menu{
+    margin:0 0 .4rem;
+    padding:0 0 0 .8rem;
+    background:transparent;
+    border:0;
+    box-shadow:none;
+  }
 
   #mainNavbar .btn-cta{margin-top:.5rem;width:100%}
 
