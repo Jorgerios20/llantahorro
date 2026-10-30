@@ -67,8 +67,9 @@ jobs:
           extra=$(comm -23 /tmp/servidor /tmp/repo | grep -v -E -f /tmp/permitidos || true)
           falla=0
           if [ -n "$extra" ]; then
-            echo "::error::Hay archivos en el servidor que no están en el repo. Revísalos y bórralos si no los subiste tú:"
-            echo "$extra"
+            # La lista va dentro del aviso para que se vea en el correo y en el resumen
+            echo "::error::Hay archivos en el servidor que no están en el repo. Revísalos y bórralos si no los subiste tú:%0A${extra//$'\n'/%0A}"
+            { echo "### Archivos en el servidor que no están en el repo"; echo '```'; echo "$extra"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
             falla=1
           fi
           if ! cmp -s .htaccess /tmp/htaccess-servidor; then
