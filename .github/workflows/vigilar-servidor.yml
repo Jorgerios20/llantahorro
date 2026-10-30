@@ -1,0 +1,79 @@
+# Revisa cada día que el servidor tenga exactamente lo que hay en el repo.
+# Si alguien sube o cambia un archivo por fuera (como el HTML malicioso de oct-2026),
+# este flujo falla y GitHub te manda un correo.
+# Usa los mismos secrets que el despliegue: FTP_SERVER, FTP_USERNAME, FTP_PASSWORD.
+name: Vigilar el servidor
+
+on:
+  schedule:
+    - cron: "0 13 * * *" # 7:00 a. m. en Querétaro
+  workflow_run:
+    workflows: ["Desplegar en HostGator"]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  vigilar:
+    runs-on: ubuntu-latest
+    env:
+      SITIO: https://llantahorroqro.com.mx
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
+      FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+      LFTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+      SERVER_DIR: ${{ vars.FTP_SERVER_DIR || '/public_html/' }}
+      # Archivos del servidor que no vienen del repo pero son legítimos (una expresión regular por línea).
+      # Si HostGator crea otro archivo propio, agrégalo aquí.
+      PERMITIDOS: |
+        ^\.ftp-deploy-sync-state\.json$
+        ^\.well-known/
+        ^cgi-bin/
+        ^error_log$
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Comparar las páginas en vivo con el repo
+        run: |
+          falla=0
+          for f in $(git ls-files '*.html' '*.css' '*.js' '*.xml' '*.txt'); do
+            if ! curl -fsSL "$SITIO/$f" -o /tmp/vivo; then
+              echo "::error::No se pudo descargar $f"; falla=1; continue
+            fi
+            if ! cmp -s "$f" /tmp/vivo; then
+              echo "::error::$f en el servidor es distinto al del repo"
+              diff "$f" /tmp/vivo | head -20 || true
+              falla=1
+            fi
+          done
+          exit $falla
+
+      - name: Buscar archivos que no vienen del repo
+        if: env.FTP_SERVER != ''
+        run: |
+          sudo apt-get install -y -qq lftp > /dev/null
+          # Igual que el despliegue (security: loose), no se valida el certificado
+          # porque HostGator lo emite a nombre de su servidor, no de tu dominio.
+          lftp --env-password -u "$FTP_USERNAME" "$FTP_SERVER" -e "
+            set ftp:ssl-force true; set ssl:verify-certificate no; set ftp:list-options -a;
+            find $SERVER_DIR; get ${SERVER_DIR}.htaccess -o /tmp/htaccess-servidor; bye" > /tmp/lista
+
+          sed "s|^${SERVER_DIR}||" /tmp/lista | { grep -v -e '/$' -e '^$' || true; } | sort > /tmp/servidor
+          git ls-files | grep -v -e '^\.git' -e '^README.md$' | sort > /tmp/repo
+          printf '%s\n' "$PERMITIDOS" | sed '/^$/d' > /tmp/permitidos
+
+          extra=$(comm -23 /tmp/servidor /tmp/repo | grep -v -E -f /tmp/permitidos || true)
+          falla=0
+          if [ -n "$extra" ]; then
+            echo "::error::Hay archivos en el servidor que no están en el repo. Revísalos y bórralos si no los subiste tú:"
+            echo "$extra"
+            falla=1
+          fi
+          if ! cmp -s .htaccess /tmp/htaccess-servidor; then
+            echo "::error::El .htaccess del servidor es distinto al del repo"
+            diff .htaccess /tmp/htaccess-servidor | head -20 || true
+            falla=1
+          fi
+          exit $falla

@@ -29,7 +29,8 @@ jobs:
 
       - name: Subir a HostGator
         if: env.FTP_SERVER != ''
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        # Fijado al commit exacto de v4.3.5: si alguien mueve la etiqueta, no se ejecuta código ajeno con tu contraseña FTP
+        uses: SamKirkland/FTP-Deploy-Action@8e83cea8672e3fbcbb9fdafff34debf6ae4c5f65 # v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}

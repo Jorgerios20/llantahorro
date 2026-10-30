@@ -12,6 +12,32 @@ RewriteCond %{HTTPS} off [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteRule ^ https://llantahorroqro.com.mx%{REQUEST_URI} [R=301,L]
 
+# ===== Seguridad =====
+# El sitio es HTML estático: ningún archivo ejecutable debe responder.
+# Si alguien sube un .php (o similar) al servidor, Apache lo bloquea.
+<FilesMatch "\.(php\d?|phtml|phar|pl|py|cgi|sh|asp|aspx|jsp)$">
+  Require all denied
+</FilesMatch>
+
+# Archivos ocultos (.ftp-deploy-sync-state.json, .git, .env...) no son públicos.
+# Se deja libre /.well-known para renovar el SSL.
+RewriteRule (^|/)\.(?!well-known/) - [F,L]
+
+# Sin listado de carpetas
+Options -Indexes
+
+<IfModule mod_headers.c>
+  # Solo HTTPS durante un año
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  # Solo se cargan scripts, estilos, fuentes y mapas de estos dominios.
+  # Un <script src="sitio-malicioso"> inyectado en el HTML no se ejecuta.
+  # Si se agrega un servicio externo (p. ej. Google Analytics), hay que sumarlo aquí.
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com https://www.facebook.com; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+</IfModule>
+
 # Caché del navegador: visitas repetidas cargan más rápido
 <IfModule mod_expires.c>
   ExpiresActive On
